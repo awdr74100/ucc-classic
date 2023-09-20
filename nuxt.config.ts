@@ -9,6 +9,9 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['stores'],
   },
+  build: {
+    transpile: ['trpc-nuxt'],
+  },
   modules: [
     [
       '@pinia/nuxt',
