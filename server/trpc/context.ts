@@ -1,15 +1,16 @@
 import type { inferAsyncReturnType } from '@trpc/server';
+import type { H3Event } from 'h3';
 import { PrismaClient } from '@prisma/client';
 
-let _prisma: PrismaClient;
+let _prismaClient: PrismaClient;
 
-export const createContext = () => {
-  if (!_prisma) {
-    _prisma = new PrismaClient();
+export const createContext = async (event: H3Event) => {
+  if (!_prismaClient) {
+    _prismaClient = new PrismaClient();
   }
 
   return {
-    prisma: _prisma,
+    prisma: _prismaClient,
   };
 };
 
