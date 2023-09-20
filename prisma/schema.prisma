@@ -9,3 +9,15 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Movie {
+  id Int @id @default(autoincrement())
+
+  @@map("movie")
+}
+
+model Venue {
+  id Int @id @default(autoincrement())
+
+  @@map("venue")
+}

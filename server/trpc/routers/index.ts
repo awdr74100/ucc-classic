@@ -1,14 +1,11 @@
-import { z } from 'zod';
-import { publicProcedure, router } from '../trpc';
+import { router } from '@/server/trpc/trpc';
+
+import { movieRouter } from '@/server/trpc/routers/movie';
+import { venueRouter } from '@/server/trpc/routers/venue';
 
 export const appRouter = router({
-  user: publicProcedure.input(z.object({ id: z.number().gt(0) })).query(async ({ input }) => {
-    const { id } = input;
-
-    const user = { id, name: 'Ian' };
-
-    return user;
-  }),
+  movie: movieRouter,
+  venue: venueRouter,
 });
 
 export type AppRouter = typeof appRouter;
