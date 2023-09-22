@@ -13,8 +13,9 @@ datasource db {
 model Movie {
   id          Int              @id @default(autoincrement())
   title       String           @db.VarChar(20)
-  summary     String           @db.VarChar(400)
+  description String           @db.VarChar(400)
   posterURLs  String[]         @map("poster_urls")
+  trailerURLs String[]         @map("trailer_urls")
   runningTime Int              @map("running_time") @db.SmallInt
   releaseDate DateTime         @map("release_date") @db.Date
   rating      Rating           @relation(fields: [ratingId], references: [id])
