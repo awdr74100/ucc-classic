@@ -11,20 +11,21 @@ datasource db {
 }
 
 model Movie {
-  id          Int              @id @default(autoincrement())
-  title       String           @db.VarChar(20)
-  description String           @db.VarChar(400)
-  posterURLs  String[]         @map("poster_urls")
-  trailerURLs String[]         @map("trailer_urls")
-  runningTime Int              @map("running_time") @db.SmallInt
-  releaseDate DateTime         @map("release_date") @db.Date
-  rating      Rating           @relation(fields: [ratingId], references: [id])
-  ratingId    Int              @map("rating_id")
-  language    Language         @relation(fields: [languageId], references: [id])
-  languageId  Int              @map("language_id")
-  genres      Movie_Genre[]
-  actors      Movie_Actor[]
-  directors   Movie_Director[]
+  id               Int              @id @default(autoincrement())
+  title            String           @db.VarChar(30)
+  titleAlternative String?          @map("title_alternative") @db.VarChar(50)
+  description      String           @db.VarChar(400)
+  posterURLs       String[]         @map("poster_urls")
+  trailerURLs      String[]         @map("trailer_urls")
+  runningTime      Int              @map("running_time") @db.SmallInt
+  releaseDate      DateTime         @map("release_date") @db.Date
+  rating           Rating           @relation(fields: [ratingId], references: [id])
+  ratingId         Int              @map("rating_id")
+  language         Language         @relation(fields: [languageId], references: [id])
+  languageId       Int              @map("language_id")
+  genres           Movie_Genre[]
+  actors           Movie_Actor[]
+  directors        Movie_Director[]
 
   @@map("movie")
 }
@@ -74,9 +75,10 @@ model Movie_Actor {
 }
 
 model Actor {
-  id       Int           @id @default(autoincrement())
-  fullName String        @map("full_name") @db.VarChar(40)
-  movies   Movie_Actor[]
+  id              Int           @id @default(autoincrement())
+  name            String        @db.VarChar(20)
+  nameAlternative String?       @map("name_alternative") @db.VarChar(40)
+  movies          Movie_Actor[]
 
   @@map("actor")
 }
@@ -92,9 +94,10 @@ model Movie_Director {
 }
 
 model Director {
-  id       Int              @id @default(autoincrement())
-  fullName String           @map("full_name") @db.VarChar(40)
-  movies   Movie_Director[]
+  id              Int              @id @default(autoincrement())
+  name            String           @db.VarChar(20)
+  nameAlternative String?          @map("name_alternative") @db.VarChar(40)
+  movies          Movie_Director[]
 
   @@map("director")
 }
