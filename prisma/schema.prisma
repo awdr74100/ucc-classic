@@ -44,14 +44,6 @@ model Language {
   @@map("language")
 }
 
-model Genre {
-  id     Int           @id @default(autoincrement())
-  name   String        @db.VarChar(20)
-  movies Movie_Genre[]
-
-  @@map("genre")
-}
-
 model Movie_Genre {
   movie   Movie @relation(fields: [movieId], references: [id])
   movieId Int   @map("movie_id")
@@ -62,12 +54,12 @@ model Movie_Genre {
   @@map("movie_genre")
 }
 
-model Actor {
-  id       Int           @id @default(autoincrement())
-  fullName String        @map("full_name") @db.VarChar(40)
-  movies   Movie_Actor[]
+model Genre {
+  id     Int           @id @default(autoincrement())
+  name   String        @db.VarChar(20)
+  movies Movie_Genre[]
 
-  @@map("actor")
+  @@map("genre")
 }
 
 model Movie_Actor {
@@ -80,12 +72,12 @@ model Movie_Actor {
   @@map("movie_actor")
 }
 
-model Director {
-  id       Int              @id @default(autoincrement())
-  fullName String           @map("full_name") @db.VarChar(40)
-  movies   Movie_Director[]
+model Actor {
+  id       Int           @id @default(autoincrement())
+  fullName String        @map("full_name") @db.VarChar(40)
+  movies   Movie_Actor[]
 
-  @@map("director")
+  @@map("actor")
 }
 
 model Movie_Director {
@@ -96,4 +88,12 @@ model Movie_Director {
 
   @@id([movieID, direcotrId])
   @@map("movie_director")
+}
+
+model Director {
+  id       Int              @id @default(autoincrement())
+  fullName String           @map("full_name") @db.VarChar(40)
+  movies   Movie_Director[]
+
+  @@map("director")
 }
