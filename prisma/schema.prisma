@@ -11,42 +11,60 @@ datasource db {
 }
 
 model Movie {
-  id               Int              @id @default(autoincrement())
-  title            String           @db.VarChar(30)
-  titleAlternative String?          @map("title_alternative") @db.VarChar(50)
-  description      String           @db.VarChar(400)
-  posterURLs       String[]         @map("poster_urls")
-  trailerURLs      String[]         @map("trailer_urls")
-  runningTime      Int              @map("running_time") @db.SmallInt
-  releaseDate      DateTime         @map("release_date") @db.Date
-  rating           Rating           @relation(fields: [ratingId], references: [id])
-  ratingId         Int              @map("rating_id")
-  language         Language         @relation(fields: [languageId], references: [id])
-  languageId       Int              @map("language_id")
-  genres           Movie_Genre[]
-  actors           Movie_Actor[]
-  directors        Movie_Director[]
+  id                     Int                 @id @default(autoincrement())
+  title                  String              @db.VarChar(30)
+  titleAlternative       String              @map("title_alternative") @db.VarChar(50)
+  description            String              @db.VarChar(400)
+  descriptionAlternative String              @map("description_alternative") @db.VarChar(600)
+  posterURLs             String[]            @map("poster_urls")
+  trailerURLs            String[]            @map("trailer_urls")
+  runningTime            Int                 @map("running_time") @db.SmallInt
+  releaseDate            DateTime            @map("release_date") @db.Date
+  genres                 GenresOnMovies[]
+  actors                 ActorsOnMovies[]
+  directors              DirectorsOnMovies[]
+  languages              LanguagesOnMovies[]
 
   @@map("movie")
 }
 
-model Rating {
-  id     Int     @id @default(autoincrement())
-  name   String  @db.VarChar(10)
-  movies Movie[]
+model Genre {
+  id              Int              @id @default(autoincrement())
+  name            String           @db.VarChar(20)
+  nameAlternative String?          @db.VarChar(40)
+  movies          GenresOnMovies[]
 
-  @@map("rating")
+  @@map("genre")
+}
+
+model Actor {
+  id              Int              @id @default(autoincrement())
+  name            String           @db.VarChar(20)
+  nameAlternative String?          @map("name_alternative") @db.VarChar(40)
+  movies          ActorsOnMovies[]
+
+  @@map("actor")
+}
+
+model Director {
+  id              Int                 @id @default(autoincrement())
+  name            String              @db.VarChar(20)
+  nameAlternative String?             @map("name_alternative") @db.VarChar(40)
+  movies          DirectorsOnMovies[]
+
+  @@map("director")
 }
 
 model Language {
-  id     Int     @id @default(autoincrement())
-  name   String  @db.VarChar(20)
-  movies Movie[]
+  id              Int                 @id @default(autoincrement())
+  name            String              @db.VarChar(20)
+  nameAlternative String?             @map("name_alternative") @db.VarChar(40)
+  movies          LanguagesOnMovies[]
 
   @@map("language")
 }
 
-model Movie_Genre {
+model GenresOnMovies {
   movie   Movie @relation(fields: [movieId], references: [id])
   movieId Int   @map("movie_id")
   genre   Genre @relation(fields: [genreId], references: [id])
@@ -56,15 +74,7 @@ model Movie_Genre {
   @@map("movie_genre")
 }
 
-model Genre {
-  id     Int           @id @default(autoincrement())
-  name   String        @db.VarChar(20)
-  movies Movie_Genre[]
-
-  @@map("genre")
-}
-
-model Movie_Actor {
+model ActorsOnMovies {
   movie   Movie @relation(fields: [movieId], references: [id])
   movieId Int   @map("movie_id")
   actor   Actor @relation(fields: [actorId], references: [id])
@@ -74,30 +84,22 @@ model Movie_Actor {
   @@map("movie_actor")
 }
 
-model Actor {
-  id              Int           @id @default(autoincrement())
-  name            String        @db.VarChar(20)
-  nameAlternative String?       @map("name_alternative") @db.VarChar(40)
-  movies          Movie_Actor[]
-
-  @@map("actor")
-}
-
-model Movie_Director {
-  movie      Movie    @relation(fields: [movieID], references: [id])
-  movieID    Int      @map("movie_id")
+model DirectorsOnMovies {
+  movie      Movie    @relation(fields: [movieId], references: [id])
+  movieId    Int      @map("movie_id")
   director   Director @relation(fields: [direcotrId], references: [id])
   direcotrId Int      @map("director_id")
 
-  @@id([movieID, direcotrId])
+  @@id([movieId, direcotrId])
   @@map("movie_director")
 }
 
-model Director {
-  id              Int              @id @default(autoincrement())
-  name            String           @db.VarChar(20)
-  nameAlternative String?          @map("name_alternative") @db.VarChar(40)
-  movies          Movie_Director[]
+model LanguagesOnMovies {
+  movie      Movie    @relation(fields: [movieId], references: [id])
+  movieId    Int      @map("movie_id")
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId Int      @map("language_id")
 
-  @@map("director")
+  @@id([movieId, languageId])
+  @@map("movie_language")
 }
