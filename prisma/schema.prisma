@@ -13,9 +13,9 @@ datasource db {
 model Movie {
   id                     Int                 @id @default(autoincrement())
   title                  String              @db.VarChar(30)
-  titleAlternative       String?              @map("title_alternative") @db.VarChar(50)
+  titleAlternative       String?             @map("title_alternative") @db.VarChar(50)
   description            String              @db.VarChar(400)
-  descriptionAlternative String?              @map("description_alternative") @db.VarChar(600)
+  descriptionAlternative String?             @map("description_alternative") @db.VarChar(600)
   posterURLs             String[]            @map("poster_urls")
   trailerURLs            String[]            @map("trailer_urls")
   runningTime            Int                 @map("running_time") @db.SmallInt
@@ -31,7 +31,7 @@ model Movie {
 model Genre {
   id              Int              @id @default(autoincrement())
   name            String           @db.VarChar(20)
-  nameAlternative String?          @db.VarChar(40)
+  nameAlternative String?          @map("name_alternative") @db.VarChar(40)
   movies          GenresOnMovies[]
 
   @@map("genre")
