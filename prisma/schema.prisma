@@ -20,12 +20,24 @@ model Movie {
   trailerURLs            String[]            @map("trailer_urls")
   runningTime            Int                 @map("running_time") @db.SmallInt
   releaseDate            DateTime            @map("release_date") @db.Date
+  active                 Boolean             @default(false)
+  rating                 Rating              @default(PG12)
   genres                 GenresOnMovies[]
   actors                 ActorsOnMovies[]
   directors              DirectorsOnMovies[]
   languages              LanguagesOnMovies[]
 
   @@map("movie")
+}
+
+enum Rating {
+  G
+  P
+  PG12
+  PG15
+  R
+
+  @@map("rating")
 }
 
 model Genre {
