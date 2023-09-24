@@ -11,15 +11,17 @@ datasource db {
 }
 
 model User {
-  id    Int            @id @default(autoincrement())
-  roles RolesOnUsers[]
+  id       Int            @id @default(autoincrement())
+  email    String         @db.VarChar(254)
+  password String
+  roles    RolesOnUsers[]
 
   @@map("user")
 }
 
 model Role {
   id    Int            @id @default(autoincrement())
-  name  String         @db.VarChar(15)
+  name  String         @unique @db.VarChar(16)
   users RolesOnUsers[]
 
   @@map("role")
@@ -30,8 +32,8 @@ model RolesOnUsers {
   userId     Int      @map("user_id")
   role       Role     @relation(fields: [roleId], references: [id])
   roleId     Int      @map("role_id")
-  assignedAt DateTime @default(now()) @map("assigned_at")
-  assignedBy String   @map("assigned_by")
+  assignedAt DateTime @default(now()) @map("assigned_at") @db.Timestamp(3)
+  assignedBy String   @map("assigned_by") @db.VarChar(16)
 
   @@id([userId, roleId])
   @@map("user_role")
