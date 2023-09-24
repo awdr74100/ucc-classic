@@ -21,11 +21,14 @@ model User {
 }
 
 model Profile {
-  id        Int    @id @default(autoincrement())
-  user      User   @relation(fields: [userId], references: [id])
-  userId    Int    @unique @map("user_id")
-  firstName String @map("first_name") @db.VarChar(16)
-  lastName  String @map("last_name") @db.VarChar(16)
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int      @unique @map("user_id")
+  firstName   String   @map("first_name") @db.VarChar(16)
+  lastName    String   @map("last_name") @db.VarChar(16)
+  phoneNumber String   @map("phone_number") @db.VarChar(10)
+  dateOfBirth DateTime @map("date_of_birth") @db.Date
+  avatarURL   String   @map("avatar_url")
 
   @@map("profile")
 }
