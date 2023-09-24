@@ -10,108 +10,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Movie {
-  id                     Int                 @id @default(autoincrement())
-  title                  String              @db.VarChar(30)
-  titleAlternative       String?             @map("title_alternative") @db.VarChar(50)
-  description            String              @db.VarChar(400)
-  descriptionAlternative String?             @map("description_alternative") @db.VarChar(600)
-  posterURLs             String[]            @map("poster_urls")
-  trailerURLs            String[]            @map("trailer_urls")
-  runningTime            Int                 @map("running_time") @db.SmallInt
-  releaseDate            DateTime            @map("release_date") @db.Date
-  active                 Boolean             @default(false)
-  rating                 Rating              @default(PG12)
-  genres                 GenresOnMovies[]
-  actors                 ActorsOnMovies[]
-  directors              DirectorsOnMovies[]
-  languages              LanguagesOnMovies[]
+model User {
+  id    Int            @id @default(autoincrement())
+  roles RolesOnUsers[]
 
-  @@map("movie")
+  @@map("user")
 }
 
-enum Rating {
-  G
-  P
-  PG12
-  PG15
-  R
+model Role {
+  id    Int            @id @default(autoincrement())
+  name  String         @db.VarChar(15)
+  users RolesOnUsers[]
 
-  @@map("rating")
+  @@map("role")
 }
 
-model Genre {
-  id              Int              @id @default(autoincrement())
-  name            String           @db.VarChar(20)
-  nameAlternative String?          @map("name_alternative") @db.VarChar(40)
-  movies          GenresOnMovies[]
+model RolesOnUsers {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int      @map("user_id")
+  role       Role     @relation(fields: [roleId], references: [id])
+  roleId     Int      @map("role_id")
+  assignedAt DateTime @default(now()) @map("assigned_at")
+  assignedBy String   @map("assigned_by")
 
-  @@map("genre")
-}
-
-model Actor {
-  id              Int              @id @default(autoincrement())
-  name            String           @db.VarChar(20)
-  nameAlternative String?          @map("name_alternative") @db.VarChar(40)
-  movies          ActorsOnMovies[]
-
-  @@map("actor")
-}
-
-model Director {
-  id              Int                 @id @default(autoincrement())
-  name            String              @db.VarChar(20)
-  nameAlternative String?             @map("name_alternative") @db.VarChar(40)
-  movies          DirectorsOnMovies[]
-
-  @@map("director")
-}
-
-model Language {
-  id              Int                 @id @default(autoincrement())
-  name            String              @db.VarChar(20)
-  nameAlternative String?             @map("name_alternative") @db.VarChar(40)
-  movies          LanguagesOnMovies[]
-
-  @@map("language")
-}
-
-model GenresOnMovies {
-  movie   Movie @relation(fields: [movieId], references: [id])
-  movieId Int   @map("movie_id")
-  genre   Genre @relation(fields: [genreId], references: [id])
-  genreId Int   @map("genre_id")
-
-  @@id([movieId, genreId])
-  @@map("movie_genre")
-}
-
-model ActorsOnMovies {
-  movie   Movie @relation(fields: [movieId], references: [id])
-  movieId Int   @map("movie_id")
-  actor   Actor @relation(fields: [actorId], references: [id])
-  actorId Int   @map("actor_id")
-
-  @@id([movieId, actorId])
-  @@map("movie_actor")
-}
-
-model DirectorsOnMovies {
-  movie      Movie    @relation(fields: [movieId], references: [id])
-  movieId    Int      @map("movie_id")
-  director   Director @relation(fields: [direcotrId], references: [id])
-  direcotrId Int      @map("director_id")
-
-  @@id([movieId, direcotrId])
-  @@map("movie_director")
-}
-
-model LanguagesOnMovies {
-  movie      Movie    @relation(fields: [movieId], references: [id])
-  movieId    Int      @map("movie_id")
-  language   Language @relation(fields: [languageId], references: [id])
-  languageId Int      @map("language_id")
-
-  @@id([movieId, languageId])
-  @@map("movie_language")
+  @@id([userId, roleId])
+  @@map("user_role")
 }
