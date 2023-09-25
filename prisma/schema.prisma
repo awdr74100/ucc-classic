@@ -93,7 +93,7 @@ model Movie {
 
 model MaturityRating {
   id     Int     @id @default(autoincrement())
-  name   String  @unique @db.VarChar(4)
+  name   String  @unique @db.VarChar(4) // G, P, PG12, PG15, R
   movies Movie[]
 
   @@map("maturity_rating")
