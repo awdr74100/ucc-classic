@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id       Int            @id @default(autoincrement())
-  email    String         @unique @db.VarChar(254)
-  password String
-  profile  Profile?
-  roles    RolesOnUsers[]
+  id             Int             @id @default(autoincrement())
+  email          String          @unique @db.VarChar(254)
+  password       String
+  profile        Profile?
+  roles          RolesOnUsers[]
+  oauthProviders OAuthProvider[]
 
   @@map("user")
 }
@@ -51,4 +52,12 @@ model RolesOnUsers {
 
   @@id([userId, roleId])
   @@map("user_role")
+}
+
+model OAuthProvider {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  @@map("oauth_provider")
 }
