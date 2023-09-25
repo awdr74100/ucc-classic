@@ -81,12 +81,22 @@ model Movie {
   duration               Int                 @db.SmallInt
   posterURLs             String[]            @map("poster_urls")
   trailerURLs            String[]            @map("trailer_urls")
+  maturityRating         MaturityRating      @relation(fields: [maturityRatingId], references: [id])
+  maturityRatingId       Int                 @map("maturity_rating_id")
   genres                 GenresOnMovies[]
   actors                 ActorsOnMovies[]
   directors              DirectorsOnMovies[]
   languages              LanguagesOnMovies[]
 
   @@map("movie")
+}
+
+model MaturityRating {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique @db.VarChar(4)
+  movies Movie[]
+
+  @@map("maturity_rating")
 }
 
 model Genre {
