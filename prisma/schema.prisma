@@ -22,8 +22,9 @@ model Movie {
 }
 
 model Audio {
-  id     Int              @id @default(autoincrement())
-  movies AudiosOnMovies[]
+  id       Int              @id @default(autoincrement())
+  language String           @unique @db.VarChar(10)
+  movies   AudiosOnMovies[]
 
   @@map("audio")
 }
@@ -39,8 +40,9 @@ model AudiosOnMovies {
 }
 
 model Subtitle {
-  id     Int                 @id @default(autoincrement())
-  movies SubtitlesOnMovies[]
+  id       Int                 @id @default(autoincrement())
+  language String              @unique @db.VarChar(10)
+  movies   SubtitlesOnMovies[]
 
   @@map("subtitle")
 }
@@ -57,6 +59,7 @@ model SubtitlesOnMovies {
 
 model Genre {
   id     Int              @id @default(autoincrement())
+  name   String           @unique @db.VarChar(10)
   movies GenresOnMovies[]
 
   @@map("genre")
@@ -73,8 +76,10 @@ model GenresOnMovies {
 }
 
 model Actor {
-  id     Int              @id @default(autoincrement())
-  movies ActorsOnMovies[]
+  id              Int              @id @default(autoincrement())
+  name            String           @unique @db.VarChar(20)
+  nameAlternative String?          @db.VarChar(40)
+  movies          ActorsOnMovies[]
 
   @@map("actor")
 }
@@ -90,8 +95,10 @@ model ActorsOnMovies {
 }
 
 model Director {
-  id     Int                 @id @default(autoincrement())
-  movies DirectorsOnMovies[]
+  id              Int                 @id @default(autoincrement())
+  name            String              @unique @db.VarChar(20)
+  nameAlternative String?             @db.VarChar(40)
+  movies          DirectorsOnMovies[]
 
   @@map("director")
 }
