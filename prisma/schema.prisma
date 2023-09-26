@@ -12,12 +12,15 @@ datasource db {
 
 model Movie {
   id                     Int                         @id @default(autoincrement())
-  title                  String                      @unique @db.VarChar(40)
-  titleAlternative       String?                     @map("title_alternative") @db.VarChar(60)
-  description            String                      @db.VarChar(400)
-  descriptionAlternative String?                     @map("description_alternative") @db.VarChar(600)
+  title                  String                      @unique @db.VarChar(30)
+  titleAlternative       String?                     @map("title_alternative") @db.VarChar(50)
+  description            String                      @db.VarChar(300)
+  descriptionAlternative String?                     @map("description_alternative") @db.VarChar(500)
+  duration               Int                         @db.SmallInt
   posterURLs             String[]                    @map("poster_urls")
   trailerURLs            String[]                    @map("trailer_urls")
+  maturityRating         MaturityRating              @relation(fields: [maturityRatingId], references: [id])
+  maturityRatingId       Int
   audioLanguages         AudioLanguagesOnMovies[]
   subtitleLanguages      SubtitleLanguagesOnMovies[]
   genres                 GenresOnMovies[]
@@ -25,6 +28,14 @@ model Movie {
   directors              DirectorsOnMovies[]
 
   @@map("movie")
+}
+
+model MaturityRating {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique @db.VarChar(4) // G、P、PG12、PG15、R
+  movies Movie[]
+
+  @@map("maturity_rating")
 }
 
 model AudioLanguage {
