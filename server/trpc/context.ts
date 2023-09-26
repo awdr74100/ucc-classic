@@ -8,7 +8,7 @@ export const createContext = async (event: H3Event) => {
   if (!_prismaClient) {
     _prismaClient = new PrismaClient();
   }
-let secondRun =''
+
   return {
     prisma: _prismaClient,
   };
