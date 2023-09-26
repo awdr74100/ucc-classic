@@ -83,10 +83,15 @@ model Movie {
   trailerURLs            String[]            @map("trailer_urls")
   maturityRating         MaturityRating      @relation(fields: [maturityRatingId], references: [id])
   maturityRatingId       Int                 @map("maturity_rating_id")
+  firstRunReleaseDate    DateTime            @map("first_run_release_date") @db.Date
+  secondRunReleaseDate   DateTime            @map("second_run_release_date") @db.Date
+  enable                 Boolean             @default(false)
   genres                 GenresOnMovies[]
   actors                 ActorsOnMovies[]
   directors              DirectorsOnMovies[]
   languages              LanguagesOnMovies[]
+  createdAt              DateTime            @default(now()) @map("created_at") @db.Timestamp(3)
+  updatedAt              DateTime            @updatedAt @map("updated_at") @db.Timestamp(3)
 
   @@map("movie")
 }
