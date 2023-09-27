@@ -9,3 +9,127 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Movie {
+  id                     Int                         @id @default(autoincrement())
+  title                  String                      @unique @db.VarChar(40)
+  titleAlternative       String?                     @map("title_alternative") @db.VarChar(60)
+  description            String                      @db.VarChar(400)
+  descriptionAlternative String?                     @map("description_alternative") @db.VarChar(600)
+  duration               Int                         @db.SmallInt
+  posterURLs             String[]                    @map("poster_urls")
+  trailerURLs            String[]                    @map("trailer_urls")
+  createdAt              DateTime                    @map("created_at") @db.Timestamp(3)
+  updatedAt              DateTime                    @updatedAt @map("updated_at") @db.Timestamp(3)
+  releasedAt             DateTime                    @map("released_at") @db.Date
+  availableAt            DateTime                    @map("available_at") @db.Date
+  maturityRating         MaturityRating              @relation(fields: [maturityRatingId], references: [id])
+  maturityRatingId       Int
+  audioLanguages         AudioLanguagesOnMovies[]
+  subtitleLanguages      SubtitleLanguagesOnMovies[]
+  genres                 GenresOnMovies[]
+  actors                 ActorsOnMovies[]
+  directors              DirectorsOnMovies[]
+
+  @@map("movie")
+}
+
+model MaturityRating {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique @db.VarChar(4)
+  movies Movie[]
+
+  @@map("maturity_rating")
+}
+
+model AudioLanguage {
+  id     Int                      @id @default(autoincrement())
+  name   String                   @unique @db.VarChar(20)
+  movies AudioLanguagesOnMovies[]
+
+  @@map("audio_language")
+}
+
+model AudioLanguagesOnMovies {
+  movie           Movie         @relation(fields: [movidId], references: [id])
+  movidId         Int           @map("movie_id")
+  audioLanguage   AudioLanguage @relation(fields: [audioLanguageId], references: [id])
+  audioLanguageId Int
+
+  @@id([movidId, audioLanguageId])
+  @@map("movie_audio_language")
+}
+
+model SubtitleLanguage {
+  id     Int                         @id @default(autoincrement())
+  name   String                      @unique @db.VarChar(20)
+  movies SubtitleLanguagesOnMovies[]
+
+  @@map("subtitle_language")
+}
+
+model SubtitleLanguagesOnMovies {
+  movie              Movie            @relation(fields: [movidId], references: [id])
+  movidId            Int              @map("movie_id")
+  subtitleLanguage   SubtitleLanguage @relation(fields: [subtitleLanguageId], references: [id])
+  subtitleLanguageId Int              @map("subtitle_language_id")
+
+  @@id([movidId, subtitleLanguageId])
+  @@map("movie_subtitle_language")
+}
+
+model Genre {
+  id     Int              @id @default(autoincrement())
+  name   String           @unique @db.VarChar(20)
+  movies GenresOnMovies[]
+
+  @@map("genre")
+}
+
+model GenresOnMovies {
+  movie   Movie @relation(fields: [movidId], references: [id])
+  movidId Int   @map("movie_id")
+  genre   Genre @relation(fields: [genreId], references: [id])
+  genreId Int   @map("genre_id")
+
+  @@id([movidId, genreId])
+  @@map("movie_genre")
+}
+
+model Actor {
+  id              Int              @id @default(autoincrement())
+  name            String           @unique @db.VarChar(20)
+  nameAlternative String?          @map("name_alternative") @db.VarChar(40)
+  movies          ActorsOnMovies[]
+
+  @@map("actor")
+}
+
+model ActorsOnMovies {
+  movie   Movie @relation(fields: [movidId], references: [id])
+  movidId Int   @map("movie_id")
+  actor   Actor @relation(fields: [actorId], references: [id])
+  actorId Int   @map("actor_id")
+
+  @@id([movidId, actorId])
+  @@map("movie_actor")
+}
+
+model Director {
+  id              Int                 @id @default(autoincrement())
+  name            String              @unique @db.VarChar(20)
+  nameAlternative String?             @map("name_alternative") @db.VarChar(40)
+  movies          DirectorsOnMovies[]
+
+  @@map("director")
+}
+
+model DirectorsOnMovies {
+  movie      Movie    @relation(fields: [movidId], references: [id])
+  movidId    Int      @map("movie_id")
+  director   Director @relation(fields: [directorId], references: [id])
+  directorId Int      @map("director_id")
+
+  @@id([movidId, directorId])
+  @@map("movie_director")
+}
