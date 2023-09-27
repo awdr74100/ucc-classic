@@ -36,6 +36,7 @@ model Profile {
   createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamp(3)
   updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamp(3)
 
+  @@unique([userId, typeId])
   @@map("profile")
 }
 
