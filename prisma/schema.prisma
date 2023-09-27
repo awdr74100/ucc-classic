@@ -11,67 +11,16 @@ datasource db {
 }
 
 model Movie {
-  id                     Int                         @id @default(autoincrement())
-  title                  String                      @unique @db.VarChar(30)
-  titleAlternative       String?                     @map("title_alternative") @db.VarChar(50)
-  description            String                      @db.VarChar(300)
-  descriptionAlternative String?                     @map("description_alternative") @db.VarChar(500)
-  duration               Int                         @db.SmallInt
-  posterURLs             String[]                    @map("poster_urls")
-  trailerURLs            String[]                    @map("trailer_urls")
-  maturityRating         MaturityRating              @relation(fields: [maturityRatingId], references: [id])
-  maturityRatingId       Int
-  audioLanguages         AudioLanguagesOnMovies[]
-  subtitleLanguages      SubtitleLanguagesOnMovies[]
+  id                     Int                 @id @default(autoincrement())
+  title                  String              @unique @db.VarChar(40)
+  titleAlternative       String?             @map("title_alternative") @db.VarChar(60)
+  description            String              @db.VarChar(400)
+  descriptionAlternative String?             @map("description_alternative") @db.VarChar(600)
   genres                 GenresOnMovies[]
   actors                 ActorsOnMovies[]
   directors              DirectorsOnMovies[]
 
   @@map("movie")
-}
-
-model MaturityRating {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique @db.VarChar(4) // G、P、PG12、PG15、R
-  movies Movie[]
-
-  @@map("maturity_rating")
-}
-
-model AudioLanguage {
-  id     Int                      @id @default(autoincrement())
-  name   String                   @unique @db.VarChar(10)
-  movies AudioLanguagesOnMovies[]
-
-  @@map("audio_language")
-}
-
-model AudioLanguagesOnMovies {
-  movie           Movie         @relation(fields: [movieId], references: [id])
-  movieId         Int           @map("movid_id")
-  audioLanguage   AudioLanguage @relation(fields: [audioLanguageId], references: [id])
-  audioLanguageId Int           @map("audio_language_id")
-
-  @@id([movieId, audioLanguageId])
-  @@map("movie_audio_language")
-}
-
-model SubtitleLanguage {
-  id     Int                         @id @default(autoincrement())
-  name   String                      @unique @db.VarChar(10)
-  movies SubtitleLanguagesOnMovies[]
-
-  @@map("subtitle_language")
-}
-
-model SubtitleLanguagesOnMovies {
-  movie              Movie            @relation(fields: [movieId], references: [id])
-  movieId            Int              @map("movie_id")
-  subtitleLanguage   SubtitleLanguage @relation(fields: [subtitleLanguageId], references: [id])
-  subtitleLanguageId Int              @map("subtitle_language_id")
-
-  @@id([movieId, subtitleLanguageId])
-  @@map("movie_subtitle_language")
 }
 
 model Genre {
@@ -84,7 +33,7 @@ model Genre {
 
 model GenresOnMovies {
   movie   Movie @relation(fields: [movieId], references: [id])
-  movieId Int   @map("movid_id")
+  movieId Int   @map("movie_id")
   genre   Genre @relation(fields: [genreId], references: [id])
   genreId Int   @map("genre_id")
 
