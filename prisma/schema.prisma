@@ -16,6 +16,8 @@ model Movie {
   titleAlternative       String?             @map("title_alternative") @db.VarChar(60)
   description            String              @db.VarChar(400)
   descriptionAlternative String?             @map("description_alternative") @db.VarChar(600)
+  posterURLs             String[]
+  trailerURLs            String[]
   genres                 GenresOnMovies[]
   actors                 ActorsOnMovies[]
   directors              DirectorsOnMovies[]
