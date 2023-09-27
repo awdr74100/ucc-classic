@@ -11,12 +11,40 @@ datasource db {
 }
 
 model User {
-  id       Int            @id @default(autoincrement())
-  email    String         @db.VarChar(254)
-  password String         @db.Text
-  roles    RolesOnUsers[]
+  id        Int            @id @default(autoincrement())
+  email     String         @unique @db.VarChar(254)
+  password  String         @db.Text
+  profiles  Profile[]
+  roles     RolesOnUsers[]
+  createdAt DateTime       @default(now()) @map("created_at") @db.Timestamp(3)
+  updatedAt DateTime       @updatedAt @map("updated_at") @db.Timestamp(3)
 
   @@map("user")
+}
+
+model Profile {
+  id          Int         @id @default(autoincrement())
+  user        User        @relation(fields: [userId], references: [id])
+  userId      Int         @map("user_id")
+  type        ProfileType @relation(fields: [typeId], references: [id])
+  typeId      Int         @map("type_id")
+  lastName    String?     @map("last_name") @db.VarChar(20)
+  firstName   String?     @map("first_name") @db.VarChar(20)
+  pictureURL  String?     @map("picture_url") @db.Text
+  phoneNumber String?     @map("phone_number") @db.VarChar(10)
+  dateOfBirth DateTime?   @map("date_of_birth") @db.Date
+  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamp(3)
+  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamp(3)
+
+  @@map("profile")
+}
+
+model ProfileType {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique @db.VarChar(20)
+  profiles Profile[]
+
+  @@map("profile_type")
 }
 
 model Role {
