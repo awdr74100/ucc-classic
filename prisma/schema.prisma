@@ -49,7 +49,7 @@ model Movie {
   createdAt              DateTime                    @default(now()) @map("created_at") @db.Timestamp(3)
   updatedAt              DateTime                    @updatedAt @map("updated_at") @db.Timestamp(3)
   releasedAt             DateTime                    @map("released_at") @db.Date
-  availableAt            DateTime                    @map("available_at") @db.Date
+  scheduledAt            DateTime                    @map("scheduled_at") @db.Date
   maturityRating         MaturityRating              @relation(fields: [maturityRatingId], references: [id])
   maturityRatingId       Int
   audioLanguages         AudioLanguagesOnMovies[]
