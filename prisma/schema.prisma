@@ -10,6 +10,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       Int            @id @default(autoincrement())
+  email    String         @db.VarChar(254)
+  password String         @db.Text
+  roles    RolesOnUsers[]
+
+  @@map("user")
+}
+
+model Role {
+  id    Int            @id @default(autoincrement())
+  name  String         @unique @db.VarChar(20)
+  users RolesOnUsers[]
+
+  @@map("role")
+}
+
+model RolesOnUsers {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+  role   Role @relation(fields: [roleId], references: [id])
+  roleId Int  @map("role_id")
+
+  @@id([userId, roleId])
+  @@map("user_role")
+}
+
 model Movie {
   id                     Int                         @id @default(autoincrement())
   title                  String                      @unique @db.VarChar(40)
@@ -19,7 +46,7 @@ model Movie {
   duration               Int                         @db.SmallInt
   posterURLs             String[]                    @map("poster_urls")
   trailerURLs            String[]                    @map("trailer_urls")
-  createdAt              DateTime                    @map("created_at") @db.Timestamp(3)
+  createdAt              DateTime                    @default(now()) @map("created_at") @db.Timestamp(3)
   updatedAt              DateTime                    @updatedAt @map("updated_at") @db.Timestamp(3)
   releasedAt             DateTime                    @map("released_at") @db.Date
   availableAt            DateTime                    @map("available_at") @db.Date
