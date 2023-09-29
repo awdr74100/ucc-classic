@@ -11,11 +11,13 @@ datasource db {
 }
 
 model User {
-  id       Int            @id @default(autoincrement())
-  email    String         @db.VarChar(254)
-  password String         @db.Text
-  profiles Profile[]
-  roles    RolesOnUsers[]
+  id        Int            @id @default(autoincrement())
+  email     String         @db.VarChar(254)
+  password  String         @db.Text
+  profiles  Profile[]
+  roles     RolesOnUsers[]
+  createdAt DateTime       @default(now()) @map("created_at") @db.Timestamp(3)
+  updatedAt DateTime       @updatedAt @map("updated_at") @db.Timestamp(3)
 
   @@map("user")
 }
