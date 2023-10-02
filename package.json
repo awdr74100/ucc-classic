@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "test": "vitest run",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -19,15 +20,19 @@
     "nuxt": "^3.7.4",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4",
-    "prisma": "^5.3.1"
+    "prisma": "^5.3.1",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
     "@prisma/client": "5.3.1",
     "@trpc/client": "^10.38.5",
     "@trpc/server": "^10.38.5",
+    "argon2": "^0.31.1",
+    "jose": "^4.14.6",
     "nuxt-typed-router": "^3.3.1",
     "trpc-nuxt": "^0.10.12",
+    "trpc-playground": "^1.0.4",
     "zod": "^3.22.2"
   }
 }

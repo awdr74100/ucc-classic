@@ -1,11 +1,11 @@
-import { router } from '@/server/trpc/trpc';
+// import { router } from '@/server/trpc/trpc';
 
-import { movieRouter } from '@/server/trpc/routers/movie';
-import { venueRouter } from '@/server/trpc/routers/venue';
+// import { authRouter } from '@/server/trpc/routers/auth';
+import { router } from '../trpc';
+import { authRouter } from '../routers/auth';
 
 export const appRouter = router({
-  movie: movieRouter,
-  venue: venueRouter,
+  auth: authRouter,
 });
 
 export type AppRouter = typeof appRouter;

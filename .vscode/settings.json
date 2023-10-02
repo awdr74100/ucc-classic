@@ -4,5 +4,17 @@
   },
   "editor.quickSuggestions": {
     "strings": "on"
-  }
+  },
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "uccC",
+      "database": "ucc",
+      "username": "lanyiru",
+      "password": ""
+    }
+  ]
 }
