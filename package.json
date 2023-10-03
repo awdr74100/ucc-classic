@@ -19,6 +19,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
+    "eslint-plugin-vitest": "^0.3.2",
     "nuxt": "^3.7.4",
     "nuxt-vitest": "^0.11.0",
     "prettier": "^3.0.3",

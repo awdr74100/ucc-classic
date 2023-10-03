@@ -4,5 +4,12 @@
     "@nuxt/eslint-config",
     "plugin:tailwindcss/recommended",
     "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["tests/**"],
+      "plugins": ["vitest"],
+      "extends": ["plugin:vitest/recommended"]
+    }
   ]
 }
