@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && prisma generate",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -19,8 +20,10 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "nuxt": "^3.7.4",
+    "nuxt-vitest": "^0.11.0",
     "prettier": "^3.0.3",
     "prisma": "^5.3.1",
+    "vitest": "0.33.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },

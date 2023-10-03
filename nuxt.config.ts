@@ -16,6 +16,7 @@ export default defineNuxtConfig({
         viewer: false,
       },
     ],
+    ['nuxt-vitest', {}],
     [
       'nuxt-typed-router',
       {
