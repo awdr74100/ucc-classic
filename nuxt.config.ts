@@ -6,19 +6,10 @@ export default defineNuxtConfig({
   typescript: {
     shim: false,
   },
-  imports: {
-    dirs: ['stores'],
-  },
   build: {
     transpile: ['trpc-nuxt'],
   },
   modules: [
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: ['defineStore', 'acceptHMRUpdate', 'storeToRefs'],
-      },
-    ],
     [
       '@nuxtjs/tailwindcss',
       {

@@ -1,7 +1,5 @@
 {
-  "trailingComma": "all",
   "singleQuote": true,
-  "arrowParens": "always",
-  "printWidth": 100,
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "trailingComma": "all",
+  "printWidth": 80
 }
