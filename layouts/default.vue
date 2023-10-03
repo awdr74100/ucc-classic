@@ -1,5 +1,8 @@
 <template>
-  <main>
-    <slot />
-  </main>
+  <div>
+    <AppNotification />
+    <main>
+      <slot />
+    </main>
+  </div>
 </template>
