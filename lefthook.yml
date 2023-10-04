@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  skip:
+    - merge
+    - rebase
+  commands:
+    eslint:
+      glob: '*.{js,ts,jsx,tsx,vue}'
+      run: 'pnpm eslint {staged_files}'
