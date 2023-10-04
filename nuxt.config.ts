@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   typescript: {
     shim: false,
   },
+  experimental: {
+    typedPages: true,
+  },
   build: {
     transpile: ['trpc-nuxt'],
   },
@@ -17,18 +20,5 @@ export default defineNuxtConfig({
       },
     ],
     ['nuxt-vitest', {}],
-    [
-      'nuxt-typed-router',
-      {
-        strict: {
-          NuxtLink: {
-            strictToArgument: true,
-          },
-          router: {
-            strictToArgument: true,
-          },
-        },
-      },
-    ],
   ],
 });

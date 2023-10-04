@@ -32,7 +32,6 @@
     "@prisma/client": "5.3.1",
     "@trpc/client": "^10.38.5",
     "@trpc/server": "^10.38.5",
-    "nuxt-typed-router": "^3.3.1",
     "trpc-nuxt": "^0.10.12",
     "zod": "^3.22.3"
   }
