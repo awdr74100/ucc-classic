@@ -24,16 +24,16 @@
     "nuxt": "^3.7.4",
     "nuxt-vitest": "^0.11.0",
     "prettier": "^3.0.3",
-    "prisma": "^5.3.1",
+    "prisma": "^5.4.1",
     "vitest": "0.33.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@prisma/client": "5.3.1",
+    "@prisma/client": "5.4.1",
     "@trpc/client": "^10.38.5",
     "@trpc/server": "^10.38.5",
     "trpc-nuxt": "^0.10.12",
-    "zod": "^3.22.3"
+    "zod": "^3.22.4"
   }
 }
